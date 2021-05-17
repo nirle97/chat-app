@@ -1,0 +1,36 @@
+.message {
+  margin-top: 10vh;
+}
+.message:nth-child(1) {
+  margin-top: 15vh;
+}
+.message span {
+  color: white;
+  font-size: 1.3rem;
+}
+
+img.sent-img,
+.sent span {
+  float: right;
+}
+
+.received span {
+  position: relative;
+  float: left;
+}
+span.msg-time {
+  padding: 0 15px;
+  font-size: 0.8rem;
+  margin-top: 2vh;
+}
+img {
+  border-radius: 50%;
+  width: 4vw;
+  height: 5vh;
+  padding: 0 5px;
+}
+
+img.rec-img {
+  position: relative;
+  float: left;
+}
