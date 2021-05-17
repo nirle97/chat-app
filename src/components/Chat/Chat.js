@@ -3,7 +3,6 @@ import { AppContext } from "../../AppContext";
 import "./chat.css";
 
 function Chat({ msg }) {
-  console.log(msg);
   const { userAuth } = useContext(AppContext);
   const [user] = userAuth;
   const sender = msg.uid === user.uid ? "sent" : "received";

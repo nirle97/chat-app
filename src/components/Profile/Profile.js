@@ -30,6 +30,7 @@ function Profile() {
 
   const [rooms] = useCollectionData(roomsQuery, { idField: "id" });
   const [setMsgs] = useState([]);
+  const lastMsgsByRoom = filterLastMsg(messages);
 
   useEffect(() => {
     usersDocRef.get().then((doc) => {
@@ -53,7 +54,18 @@ function Profile() {
     setFormValue("");
     scrollDown.current.scrollIntoView({ behavior: "smooth" });
   };
-
+  function filterLastMsg(msgs) {
+    if (!msgs) return;
+    let msgsWithDate = msgs.slice();
+    msgsWithDate = msgsWithDate.sort((msgA, msgB) => {
+      if (!msgA.createdAt) return;
+      return msgB.createdAt.seconds - msgA.createdAt.seconds;
+    });
+    let lastMsgsByRoom = msgsWithDate.filter(
+      (v, i, a) => a.findIndex((t) => t.chatRoomId === v.chatRoomId) === i
+    );
+    return lastMsgsByRoom;
+  }
   return (
     <div className="chat-container">
       <header>
@@ -99,8 +111,13 @@ function Profile() {
         )}
         {rooms?.map((room) => {
           return room.participants.map((email) => {
-            if (email === user.email)
-              return <ChatsRoom key={room.id} room={room} msgs={messages} />;
+            if (email === user.email) {
+              return lastMsgsByRoom.map((msg) => {
+                if (room.id === msg.chatRoomId) {
+                  return <ChatsRoom key={room.id} room={room} lastMsg={msg} />;
+                }
+              });
+            }
           });
         })}
       </div>
