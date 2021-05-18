@@ -6,6 +6,7 @@ import { AppContext } from "../../AppContext";
 import Messeges from "../../Messeges/Messeges";
 import ChatsRoom from "../ChatsRoom/ChatsRoom";
 import RoomSetting from "../RoomSetting/RoomSetting";
+import { logDOM } from "@testing-library/dom";
 
 function Profile() {
   const firebase = useContext(FirebaseContext);
@@ -109,17 +110,21 @@ function Profile() {
         {chatRoomSettings && (
           <RoomSetting setChatRoomSettings={setChatRoomSettings} />
         )}
-        {rooms?.map((room) => {
-          return room.participants.map((email) => {
-            if (email === user.email) {
-              return lastMsgsByRoom.map((msg) => {
-                if (room.id === msg.chatRoomId) {
-                  return <ChatsRoom key={room.id} room={room} lastMsg={msg} />;
-                }
-              });
-            }
-          });
-        })}
+        <div className="all-rooms-div">
+          {rooms?.map((room) => {
+            let lastMsg;
+            lastMsgsByRoom.forEach((msg) => {
+              if (room.id === msg.chatRoomId) return (lastMsg = msg);
+            });
+            return room.participants.map((email) => {
+              if (email === user.email) {
+                return (
+                  <ChatsRoom key={room.id} room={room} lastMsg={lastMsg} />
+                );
+              }
+            });
+          })}
+        </div>
       </div>
     </div>
   );

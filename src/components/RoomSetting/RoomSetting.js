@@ -16,7 +16,10 @@ function RoomSetting({ setChatRoomSettings }) {
   const [addPrtic, setAddprtic] = useState(false);
   const addPrticFunc = (e) => {
     e.preventDefault();
-    setAddprtic(true);
+    if (particNum.current.value > 3) {
+      particNum.current.value = 3;
+    }
+    setAddprtic((prev) => !prev);
   };
   const submitRoom = async (e) => {
     e.preventDefault();
@@ -61,26 +64,25 @@ function RoomSetting({ setChatRoomSettings }) {
           placeholder="Room's Description"
           maxLength="20"
         />
-        <span className="input-group-text participants" id="addon-wrapping">
-          Invited
-        </span>
-        <select
-          onChange={() => setAddprtic((prev) => !prev)}
-          className="form-select"
-          id="inputGroupSelect04"
-          ref={particNum}
-          name="participants"
-        >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-        </select>
-        <button
-          onClick={(e) => addPrticFunc(e)}
-          className="btn btn-outline-warning"
-        >
-          Set
-        </button>
+        <div className="partic-div">
+          <span className="input-group-text participants" id="addon-wrapping">
+            Invited
+          </span>
+          <input
+            placeholder="max of 3 people"
+            type="number"
+            ref={particNum}
+            min="1"
+            max="3"
+            className="number-input"
+          />
+          <button
+            onClick={(e) => addPrticFunc(e)}
+            className="btn btn-outline-warning"
+          >
+            Set
+          </button>
+        </div>
         {addPrtic &&
           [...Array(Number(particNum.current.value))].map((n, i) => {
             let refMail;

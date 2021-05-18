@@ -50,15 +50,30 @@ header {
   display: flex;
   flex-direction: column;
 }
+.all-rooms-div {
+  position: relative;
+  margin-top: 50px;
+  width: 90%;
+  overflow-y: scroll;
+  height: 50vh;
+}
 .msg-div::-webkit-scrollbar {
   width: 0.25rem;
 }
-
+.all-rooms-div::-webkit-scrollbar {
+  width: 0.25rem;
+}
 .msg-div::-webkit-scrollbar-track {
+  background: #1e1e24;
+}
+.all-rooms-div::-webkit-scrollbar-track {
   background: #1e1e24;
 }
 
 .msg-div::-webkit-scrollbar-thumb {
+  background: #6649b8;
+}
+.all-rooms-div::-webkit-scrollbar-thumb {
   background: #6649b8;
 }
 
@@ -100,10 +115,11 @@ header {
   width: 45vw;
 }
 .start-room-btn {
-  position: absolute;
+  position: relative;
   color: black;
   background-color: salmon;
   top: 16%;
+  margin-bottom: 11vh;
 }
 .start-room-btn:hover {
   background-color: #213b91;
